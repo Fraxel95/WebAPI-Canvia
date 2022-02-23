@@ -438,8 +438,7 @@ AS
 	IF @CITA_HORA			IS NOT NULL SET @sqlCommand = @sqlCommand	+ 'AND C.CITA_HORA			=	 ''@CITA_HORA''			'
 	IF @CITA_ESPECIALIDAD	IS NOT NULL SET @sqlCommand = @sqlCommand	+ 'AND C.CITA_ESPECIALIDAD	=	 ''@CITA_ESPECIALIDAD''	'
 	IF @CITA_MEDICO			IS NOT NULL SET @sqlCommand = @sqlCommand	+ 'AND C.CITA_MEDICO		=	   @CITA_MEDICO			'
-	IF @CITA_PACIENTE		IS NOT NULL SET @sqlCommand = @sqlCommand	+ 'AND C.CITA_PACIENTE		=	 ''@CITA_PACIENTE''		'
-	IF @CITA_ESTADO			IS NOT NULL SET @sqlCommand = @sqlCommand	+ 'AND C.CITA_ESTADO		=	 ''@CITA_ESTADO'' '
+	IF @CITA_PACIENTE		IS NOT NULL SET @sqlCommand = @sqlCommand	+ 'AND C.CITA_PACIENTE		=	 ''@CITA_PACIENTE''		'	
 	SET @sqlCommand = REPLACE(@sqlCommand,  '@CITA_CODIGO',			ISNULL(@CITA_CODIGO			,''))	
 	SET @sqlCommand = REPLACE(@sqlCommand,  '@CITA_FECHA',			ISNULL(@CITA_FECHA			,''))	
 	SET @sqlCommand = REPLACE(@sqlCommand,  '@CITA_HORA',			ISNULL(@CITA_HORA			,''))	
@@ -458,5 +457,6 @@ AS
 	SET @MaxPag = CEILING(CAST(@sqlCount AS FLOAT) / @NumResult)
 	SET @sqlCommand = 'SELECT A.* FROM(' + @sqlCommand +')A ORDER BY @ColOrder OFFSET ' + CAST(((@NumPag - 1) * @NumResult) AS VARCHAR) + ' ROWS FETCH NEXT ' + CAST(@NumResult AS VARCHAR) + ' ROWS ONLY'
 	SET @sqlCommand = REPLACE(@sqlCommand, '@ColOrder', @ColOrder )					
+	PRINT @sqlCommand
 	EXEC (@sqlCommand)
 GO
